@@ -4,5 +4,5 @@ from __future__ import unicode_literals
 from django.apps import AppConfig
 
 
-class BerrybearConfig(AppConfig):
-    name = 'BerryBear'
+class RobotsConfig(AppConfig):
+    name = 'robots'

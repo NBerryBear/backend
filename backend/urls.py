@@ -19,5 +19,6 @@ from django.conf.urls import include
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^programs/', include('BerryBear.urls')),
+    url(r'^programs/', include('programs.urls')),
+    url(r'^robots/', include('robots.urls')),
 ]

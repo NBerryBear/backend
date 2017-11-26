@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'BerryBear.apps.BerrybearConfig',
+    'programs.apps.ProgramsConfig',
+    'robots.apps.RobotsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
