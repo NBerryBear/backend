@@ -25,13 +25,12 @@ SECRET_KEY = 'jsu0(vux!b!c_48afxf!@8-zqjjqh!f!r2lbhvo4^r=x=*k178'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'BerryBear.apps.BerrybearConfig',
     'programs.apps.ProgramsConfig',
     'robots.apps.RobotsConfig',
     'django.contrib.admin',

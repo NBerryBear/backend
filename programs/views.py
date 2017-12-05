@@ -33,10 +33,9 @@ def names(request):
 #TODO Remove id
 def add(request):
     data = json.loads(request.body)
-    new = Program(data["id"], data["name"], data["commands"])
+    new = Program(name = data["name"], commands = data["commands"])
     new.save()
     response = {
-        "id" : new.id, 
         "name" : new.name,
         "commands" : new.commands
     }
