@@ -8,7 +8,6 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from .models import Program
 from django.core import serializers
-
 # Create your views here.
 
 #@csrf_exempt
@@ -17,6 +16,11 @@ from django.core import serializers
 #    #move(data["direction"])
 #    return JsonResponse(data)
 
+
+class A:
+
+    def direction(attr, settings):
+        print(settings)
 
 
 def names(request):
@@ -30,16 +34,16 @@ def names(request):
                 })
     return JsonResponse(response, safe = False)
 
-#TODO Remove id
+
 def add(request):
     data = json.loads(request.body)
-    new = Program(name = data["name"], commands = data["commands"])
+    new = Program(name = data["name"], commands = json.dumps(data["commands"]))
     new.save()
     response = {
         "name" : new.name,
         "commands" : new.commands
     }
-    return JsonResponse(response)
+    return JsonResponse(response, safe = False)
 
 
 @csrf_exempt
@@ -66,14 +70,22 @@ def program_info(program_id):
     return JsonResponse(response)
 
 def run(program_id):
-    commands = Program.objects.get(id= program_id).commands.split(" ")
-    response = []
-    for c in commands:
-        response.append(
-            { "direction" : c})
-        #move(c)
-        print c
-    return JsonResponse(response, safe = False)
+    #commands = json.loads(Program.objects.get(id= program_id).commands)
+
+    #for i in range(len(data['commands'])):
+    #    method_to_call = getattr(meche, data['commands'][i]['name'])
+    #    method_to_call(data['comands'][i]['settings'])
+
+    commands = json.loads(Program.objects.get(id = program_id).commands)
+
+    for i in range(len(commands)):
+        print(commands[i]['name'])
+        method = globals()['A']()
+        method_to_call = getattr(method, commands[i]['name'])
+        method_to_call(commands[i]['settings'])
+
+    return JsonResponse(len(commands), safe = False)
+
 
 
 def update(request, program_id):

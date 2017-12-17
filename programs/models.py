@@ -7,7 +7,7 @@ from django.db import models
 
 class Program(models.Model):
     name = models.CharField(max_length=200)
-    commands = models.TextField()
+    commands = models.CharField(max_length=2000)
 
     def __str__(self):
         return self.name

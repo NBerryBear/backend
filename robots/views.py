@@ -6,12 +6,11 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
-
 # Create your views here.
 
 @csrf_exempt
 def direction(request, robot_id):
-    #data = json.loads(request.body)
-    #move(data["direction"])
-    return HttpResponse(robot_id)
+    data = json.loads(request.body)
+    #	move(data["direction"])
+    return HttpResponse(data["direction"])
 
