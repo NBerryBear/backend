@@ -25,7 +25,7 @@ SECRET_KEY = 'jsu0(vux!b!c_48afxf!@8-zqjjqh!f!r2lbhvo4^r=x=*k178'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['192.134.3.1', 'localhost', '127.0.0.1']
 
 
 # Application definition

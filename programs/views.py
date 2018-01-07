@@ -1,27 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import JsonResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
 from .models import Program
-from django.core import serializers
-# Create your views here.
-
-#@csrf_exempt
-#def direction(request):
-#    data = json.loads(request.body)
-#    #move(data["direction"])
-#    return JsonResponse(data)
-
-
-class A:
-
-    def direction(attr, settings):
-        print(settings)
-
+from commands import robot_comands
 
 def names(request):
     programs = Program.objects.all()
@@ -36,18 +21,22 @@ def names(request):
 
 
 def add(request):
-    data = json.loads(request.body)
-    new = Program(name = data["name"], commands = json.dumps(data["commands"]))
+    body = request.body.decode('utf-8') 
+    data = json.loads(body)
+    new = Program(name = data["name"], commands = data["commands"])
+    print (data)
     new.save()
     response = {
         "name" : new.name,
         "commands" : new.commands
     }
+    print (new.commands)
     return JsonResponse(response, safe = False)
 
 
 @csrf_exempt
 def programs (request):
+    print (request.method)
     if request.method == "GET":
         return names(request)
     elif request.method == "POST":
@@ -70,18 +59,13 @@ def program_info(program_id):
     return JsonResponse(response)
 
 def run(program_id):
-    #commands = json.loads(Program.objects.get(id= program_id).commands)
-
-    #for i in range(len(data['commands'])):
-    #    method_to_call = getattr(meche, data['commands'][i]['name'])
-    #    method_to_call(data['comands'][i]['settings'])
-
+    if not robot_comands.IS_INIT:
+        robot_comands.init_pins()
     commands = json.loads(Program.objects.get(id = program_id).commands)
 
     for i in range(len(commands)):
         print(commands[i]['name'])
-        method = globals()['A']()
-        method_to_call = getattr(method, commands[i]['name'])
+        method_to_call = getattr(robot_comands, commands[i]['name'])
         method_to_call(commands[i]['settings'])
 
     return JsonResponse(len(commands), safe = False)
@@ -89,7 +73,8 @@ def run(program_id):
 
 
 def update(request, program_id):
-    new_info = json.loads(request.body)
+    body = request.body.decode('utf-8')
+    new_info = json.loads(body)
 
     Program.objects.filter(id = program_id).update(name = new_info["name"])
     Program.objects.filter(id = program_id).update(commands = new_info["commands"])    
