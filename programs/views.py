@@ -59,10 +59,12 @@ def program_info(program_id):
     return JsonResponse(response)
 
 def run(program_id):
+<<<<<<< HEAD
+=======
     if not robot_comands.IS_INIT:
         robot_comands.init_pins()
+>>>>>>> 9e7c4d887cd3f47b2b4a0c67a196b5d3fd84a383
     commands = json.loads(Program.objects.get(id = program_id).commands)
-
     for i in range(len(commands)):
         print(commands[i]['name'])
         method_to_call = getattr(robot_comands, commands[i]['name'])
