@@ -17,9 +17,14 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.conf.urls import include
 from commands import robot_comands
+from django.http import HttpResponse
+
+def server(request):
+    return HttpResponse("Berry Bear")
 
 robot_comands.init_pins()
 urlpatterns = [
+    url(r'^$', server),
     url(r'^admin/', admin.site.urls),
     url(r'^programs/', include('programs.urls')),
     url(r'^robots/', include('robots.urls')),
